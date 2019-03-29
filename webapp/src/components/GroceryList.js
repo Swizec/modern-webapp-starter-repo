@@ -45,6 +45,16 @@ const ListItem = ({ itemName, done }) => (
   </Item>
 )
 
+const NewItem = () => {
+    // useState to keep state of the new item input
+
+    
+    return <Flex>
+        <Input value={} onChange={} onKeyPress={} placeholder="What do you need to buy? 🛍" />
+        <Button>Add</Button>
+    </Flex>
+}
+
 const GroceryList = ({ listId }) => {
   const groceries = [
     { itemName: "beer", done: false, key: 1 },
@@ -63,6 +73,7 @@ const GroceryList = ({ listId }) => {
       {groceries.map((item, index) => (
         <ListItem {...item} key={item.key} />
       ))}
+      <NewItem />
     </Box>
   )
 }
