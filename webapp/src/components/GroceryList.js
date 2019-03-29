@@ -38,9 +38,9 @@ const Strike = styled.span`
 `
 
 // use onClick to dispatch a toggle done action
-const ListItem = ({ itemName, done }) => (
+const ListItem = ({ itemName, done, dispatch, index }) => (
   <Item justifyContent="space-between">
-    <ItemName as="span">
+    <ItemName as="span" onClick={() => dispatch({ type: "toggleDone", index })}>
       {done ? <Strike>{itemName}</Strike> : itemName}
     </ItemName>
   </Item>
@@ -73,6 +73,8 @@ const NewItem = ({ dispatch }) => {
 // add a toggleDone action that changes the done property on an item
 // use index to identify which item you're changing
 function reducer(state, action) {
+  const index = action.index
+
   switch (action.type) {
     case "addItem":
       return [
@@ -81,6 +83,12 @@ function reducer(state, action) {
           itemName: action.itemName,
           key: new Date().toISOString(),
         },
+      ]
+    case "toggleDone":
+      return [
+        ...state.slice(0, index),
+        { ...state[index], done: !state[index].done },
+        ...state.slice(index + 1),
       ]
     default:
       throw Error("Unnknown action")
@@ -105,7 +113,7 @@ const GroceryList = ({ listId, initialState }) => {
       {/* Loop through groceries and render a ListItem component for each */}
       {/* ListItem should take props { itemName, done }; render itemName with Strike when th eitem is done */}
       {groceries.map((item, index) => (
-        <ListItem {...item} index={index} key={item.key} />
+        <ListItem {...item} index={index} key={item.key} dispatch={dispatch} />
       ))}
       <NewItem dispatch={dispatch} />
     </Box>
