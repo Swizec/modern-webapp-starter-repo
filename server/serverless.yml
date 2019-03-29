@@ -1,0 +1,22 @@
+service: grocerylist-workshop-api
+
+provider:
+    name: aws
+    runtime: nodejs8.10
+
+functions:
+    hello:
+        handler: hello.world
+        events:
+            - http:
+                  path: hello
+                  method: get
+    query:
+        handler: handler.query
+        events:
+            - http:
+                  path: query
+                  method: get
+            - http:
+                  path: query
+                  method: post
