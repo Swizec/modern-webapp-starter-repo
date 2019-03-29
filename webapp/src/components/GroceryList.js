@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Box, Paragraph, Heading, Input, Flex, Button, styled } from "reakit"
 import { theme } from "styled-tools"
 import posed, { PoseGroup } from "react-pose"
@@ -45,14 +45,28 @@ const ListItem = ({ itemName, done }) => (
   </Item>
 )
 
-const NewItem = () => {
-    // useState to keep state of the new item input
+const NewItem = ({ dispatch }) => {
+  // useState to keep state of the new item input
+  const [itemName, setItem] = useState("")
 
-    
-    return <Flex>
-        <Input value={} onChange={} onKeyPress={} placeholder="What do you need to buy? 🛍" />
-        <Button>Add</Button>
+  const changeHandler = event => setItem(event.target.value)
+
+  const addItem = () => {
+    dispatch({ type: "addItem", itemName })
+    setItem("")
+  }
+
+  return (
+    <Flex>
+      <Input
+        value={itemName}
+        onChange={changeHandler}
+        onKeyPress={({ key }) => (key === "Enter" ? addItem() : null)}
+        placeholder="What do you need to buy? 🛍"
+      />
+      <Button onClick={addItem}>Add</Button>
     </Flex>
+  )
 }
 
 const GroceryList = ({ listId }) => {
