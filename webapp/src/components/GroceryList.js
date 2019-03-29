@@ -43,6 +43,9 @@ const ListItem = ({ itemName, done, dispatch, index }) => (
     <ItemName as="span" onClick={() => dispatch({ type: "toggleDone", index })}>
       {done ? <Strike>{itemName}</Strike> : itemName}
     </ItemName>
+    <Button opaque={false} onClick={() => dispatch({ type: "remove", index })}>
+      ❌
+    </Button>
   </Item>
 )
 
@@ -90,6 +93,8 @@ function reducer(state, action) {
         { ...state[index], done: !state[index].done },
         ...state.slice(index + 1),
       ]
+    case "remove":
+      return [...state.slice(0, index), ...state.slice(index + 1)]
     default:
       throw Error("Unnknown action")
   }
