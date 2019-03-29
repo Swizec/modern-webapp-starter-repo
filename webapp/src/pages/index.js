@@ -11,6 +11,7 @@ const IndexPage = () => (
       listId="workshopList"
       initialState={{
         listName: "Workshop Party",
+        groceries: [],
       }}
     />{" "}
   </Layout>

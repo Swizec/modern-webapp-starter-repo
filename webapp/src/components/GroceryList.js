@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useReducer } from "react"
 import { Box, Paragraph, Heading, Input, Flex, Button, styled } from "reakit"
 import { theme } from "styled-tools"
 import posed, { PoseGroup } from "react-pose"
@@ -69,12 +69,24 @@ const NewItem = ({ dispatch }) => {
   )
 }
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "addItem":
+      return [
+        ...state,
+        {
+          itemName: action.itemName,
+          key: new Date().toISOString(),
+        },
+      ]
+    default:
+      throw Error("Unnknown action")
+  }
+}
+
 const GroceryList = ({ listId, initialState }) => {
   const [listName, setListName] = useState(initialState.listName)
-  const groceries = [
-    { itemName: "beer", done: false, key: 1 },
-    { itemName: "pizza", done: true, key: 2 },
-  ]
+  const [groceries, dispatch] = useReducer(reducer, initialState.groceries)
 
   return (
     <Box>
@@ -92,7 +104,7 @@ const GroceryList = ({ listId, initialState }) => {
       {groceries.map((item, index) => (
         <ListItem {...item} key={item.key} />
       ))}
-      <NewItem />
+      <NewItem dispatch={dispatch} />
     </Box>
   )
 }
