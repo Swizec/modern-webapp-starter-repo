@@ -10,6 +10,8 @@ import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
+import { CenterColumn, theme } from "../styles"
+import { Provider, Grid } from "reakit"
 import "./layout.css"
 
 const Layout = ({ children }) => (
