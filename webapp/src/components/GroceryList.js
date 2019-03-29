@@ -37,6 +37,7 @@ const Strike = styled.span`
   }
 `
 
+// use onClick to dispatch a toggle done action
 const ListItem = ({ itemName, done }) => (
   <Item justifyContent="space-between">
     <ItemName as="span">
@@ -69,6 +70,8 @@ const NewItem = ({ dispatch }) => {
   )
 }
 
+// add a toggleDone action that changes the done property on an item
+// use index to identify which item you're changing
 function reducer(state, action) {
   switch (action.type) {
     case "addItem":
@@ -102,7 +105,7 @@ const GroceryList = ({ listId, initialState }) => {
       {/* Loop through groceries and render a ListItem component for each */}
       {/* ListItem should take props { itemName, done }; render itemName with Strike when th eitem is done */}
       {groceries.map((item, index) => (
-        <ListItem {...item} key={item.key} />
+        <ListItem {...item} index={index} key={item.key} />
       ))}
       <NewItem dispatch={dispatch} />
     </Box>
