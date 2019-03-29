@@ -69,7 +69,8 @@ const NewItem = ({ dispatch }) => {
   )
 }
 
-const GroceryList = ({ listId }) => {
+const GroceryList = ({ listId, initialState }) => {
+  const [listName, setListName] = useState(initialState.listName)
   const groceries = [
     { itemName: "beer", done: false, key: 1 },
     { itemName: "pizza", done: true, key: 2 },
@@ -77,7 +78,11 @@ const GroceryList = ({ listId }) => {
 
   return (
     <Box>
-      <TitleInput value="Workshop Party" placeholder="Give your list a name" />
+      <TitleInput
+        value={listName}
+        onChange={event => setListName(event.target.value)}
+        placeholder="Give your list a name"
+      />
       {/* Render a Paragraph if groceries is empty */}
       {!groceries.length ? (
         <Paragraph>Add some items to your list 👇</Paragraph>
