@@ -37,15 +37,32 @@ const Strike = styled.span`
   }
 `
 
+const ListItem = ({ itemName, done }) => (
+  <Item justifyContent="space-between">
+    <ItemName as="span">
+      {done ? <Strike>{itemName}</Strike> : itemName}
+    </ItemName>
+  </Item>
+)
+
 const GroceryList = ({ listId }) => {
-  const groceries = []
+  const groceries = [
+    { itemName: "beer", done: false, key: 1 },
+    { itemName: "pizza", done: true, key: 2 },
+  ]
 
   return (
     <Box>
       <TitleInput value="Workshop Party" placeholder="Give your list a name" />
       {/* Render a Paragraph if groceries is empty */}
+      {!groceries.length ? (
+        <Paragraph>Add some items to your list 👇</Paragraph>
+      ) : null}
       {/* Loop through groceries and render a ListItem component for each */}
       {/* ListItem should take props { itemName, done }; render itemName with Strike when th eitem is done */}
+      {groceries.map((item, index) => (
+        <ListItem {...item} key={item.key} />
+      ))}
     </Box>
   )
 }
