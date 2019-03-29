@@ -9,6 +9,9 @@ module.exports.query = (event, context, callback) => {
             ? event.queryStringParameters.query
             : body.query;
 
+    console.log("HELLO THIS WORKS");
+    console.log(query);
+
     graphql({ schema, source: query, variableValues: body.variables }).then(
         result =>
             callback(null, {
